@@ -3,15 +3,20 @@ require_relative 'util/math'
 require 'gosu'
 
 class Bullet
+  attr_reader :x, :y, :width, :height
+  attr_accessor :dead
+
   def initialize(image, x, y, index, vel_x, vel_y)
     @image = Gosu::Image.new(image)
     @x = x
     @y = y
+    @width = @image.width
+    @height = @image.height
     @vel_x = vel_x
     @vel_y = vel_y
     @height = 0.0
     @width = 0.0
-    @index = index
+    @dead = false
   end
 
   def update()
@@ -20,7 +25,7 @@ class Bullet
   end
 
   def draw()
-    @image.draw(@x, @y, 0)
+    @image.draw(@x, @y, 0, 1, 1)
   end
 end
 
@@ -33,21 +38,27 @@ class Player
     Gosu::KB_LEFT => ->(p) { p.rotate_left },
     Gosu::KB_RIGHT => ->(p) { p.rotate_right }
   }
+
+  attr_reader :x, :y, :width, :height, :bullets
+  attr_accessor :dead
   
   def initialize(image)
     @image = Gosu::Image.new(image)
-    @x = 320.0
-    @y = 180.0
+    @x = 960
+    @y = 540
+    @width = @image.width
+    @height = @image.height
     @vel_x = 0.0
     @vel_y = 0.0
     @angle = 0.0
-    @scale = 1.5
+    @scale = 1
     @max_speed = 5.0
     @accel = 0.1
     @friction = 0.1
     @rot_speed = 3.0
     @is_rotating = false
     @bullets = []
+    @dead = false
   end
 
   def update_pos
@@ -57,16 +68,16 @@ class Player
     half_width = @image.width * 0.5 * @scale
     half_height = @image.height * 0.5 * @scale
     
-    if @x > (640 - half_width)
-      @x = 640 - half_width
+    if @x > (1920 - half_width)
+      @x = 1920 - half_width
       @vel_x = 0
     elsif @x < half_width
       @x = half_width
       @vel_x = 0
     end
 
-    if @y > (360 - half_height)
-      @y = 360 - half_height
+    if @y > (1080 - half_height)
+      @y = 1080 - half_height
       @vel_y = 0
     elsif @y < half_height
       @y = half_height
