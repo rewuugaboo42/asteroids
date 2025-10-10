@@ -10,7 +10,7 @@ class Game < Gosu::Window
     self.caption = "Asteroids"
 
     @background = Gosu::Image.new(File.join(__dir__, "../../resource/image/background.png"))
-    @player = Player.new(File.join(__dir__, "../../resource/image/playersprite.png"))
+    @player = Player.new(self, File.join(__dir__, "../../resource/image/playersprite.png"))
     @asteroids = []
     @no_input_this_frame = false
 
@@ -22,7 +22,7 @@ class Game < Gosu::Window
     @text_h = @text.height
 
     10.times do
-      @asteroids << Enemy.new(File.join(__dir__, "../../resource/image/asteroidsprite.png"), rand(0..1920), rand(0..1080), @asteroids.length)
+      @asteroids << Enemy.new(self, File.join(__dir__, "../../resource/image/asteroidsprite.png"), rand(0..self.width), rand(0..self.height), @asteroids.length)
     end
   end
 
@@ -30,7 +30,7 @@ class Game < Gosu::Window
     @player.update_pos
     @player.get_input
     @asteroids.each do |asteroid|
-      asteroid.update_pos
+      asteroid.update_pos(@player)
       if collides?(asteroid, @player)
         p "detected player collision!"
         @player.dead = true

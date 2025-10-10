@@ -42,10 +42,11 @@ class Player
   attr_reader :x, :y, :width, :height, :bullets
   attr_accessor :dead
   
-  def initialize(image)
+  def initialize(window, image)
+    @window = window
     @image = Gosu::Image.new(image)
-    @x = 960
-    @y = 540
+    @x = window.width / 2
+    @y = window.height / 2
     @width = @image.width
     @height = @image.height
     @vel_x = 0.0
@@ -68,16 +69,16 @@ class Player
     half_width = @image.width * 0.5 * @scale
     half_height = @image.height * 0.5 * @scale
     
-    if @x > (1920 - half_width)
-      @x = 1920 - half_width
+    if @x > (@window.width - half_width)
+      @x = @window.width - half_width
       @vel_x = 0
     elsif @x < half_width
       @x = half_width
       @vel_x = 0
     end
 
-    if @y > (1080 - half_height)
-      @y = 1080 - half_height
+    if @y > (@window.height - half_height)
+      @y = @window.height - half_height
       @vel_y = 0
     elsif @y < half_height
       @y = half_height
