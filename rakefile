@@ -1,0 +1,6 @@
+# task :seed do 
+#     require "bundler"
+#     Bundler.require
+#     require_relative 'source/db/seeder'
+#     Seeder.seed!
+# end

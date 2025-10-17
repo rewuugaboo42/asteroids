@@ -1,4 +1,5 @@
 require_relative 'util/math'
+require_relative '../db/simple_record'
 
 require 'gosu'
 
@@ -29,7 +30,7 @@ class Bullet
   end
 end
 
-class Player
+class GamePlayer
   KEY_MAP = {
     Gosu::KB_A => ->(p) { p.move_left  },
     Gosu::KB_D => ->(p) { p.move_right },
@@ -129,7 +130,6 @@ class Player
   def idle()
     @vel_x = (@vel_x > 0 ? [@vel_x - @friction, 0].max : [@vel_x + @friction, 0].min)
     @vel_y = (@vel_y > 0 ? [@vel_y - @friction, 0].max : [@vel_y + @friction, 0].min)
-    
   end
 
   def shoot()
@@ -179,4 +179,8 @@ class Player
       self.idle
     end
   end
+end
+
+class Player < SimpleRecord
+
 end

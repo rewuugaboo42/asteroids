@@ -2,12 +2,14 @@ GEM
   remote: https://rubygems.org/
   specs:
     gosu (1.4.6)
+    sqlite3 (2.7.4-x64-mingw-ucrt)
 
 PLATFORMS
   x64-mingw-ucrt
 
 DEPENDENCIES
   gosu
+  sqlite3
 
 BUNDLED WITH
    2.7.1
